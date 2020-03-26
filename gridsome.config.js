@@ -23,7 +23,8 @@ var embedConfig = {
 
 module.exports = {
   siteName: 'Gridsome',
-  siteUrl: 'https://gridsome-starter-articles.now.sh',
+  siteUrl: 'https://thestoryofeight.github.io',
+  pathPrefix: '/thestoryofeight/',
   permalinks: {
     trailingSlash:false
   },
