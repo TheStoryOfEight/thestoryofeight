@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /search
+Crawl-delay: 2
+Clean-param: ref /articles/
+Sitemap: https://gridsome-starter-articles.now.sh/sitemap.xml
+Host: https://gridsome-starter-articles.now.sh
