@@ -1,42 +1,69 @@
 <template>
-  <DefaultLayout>
-    
-    <SectionHeaderBanner></SectionHeaderBanner>
+  <Layout :show-logo="true">
+    <!-- Author intro -->
+    <Author :show-title="true" />
+    <!-- List posts -->
+    <div class="posts">
+      <PostCard v-for="edge in $page.welcome_posts.edges" :key="edge.node.id" :post="edge.node"/>
+      <PostCard v-for="edge in $page.posts.edges" :key="edge.node.id" :post="edge.node"/>
+    </div>
 
-    <SectionLatestArticles></SectionLatestArticles>
-
-    <SectionContribute></SectionContribute>
-
-    <SectionInfoBoxes></SectionInfoBoxes>
-
-    <SectionLatestNews></SectionLatestNews>
-
-    <SectionOpenSource></SectionOpenSource>
-       
-  </DefaultLayout>
+  </Layout>
 </template>
 
-<script>
-import SectionHeaderBanner from "~/layouts/sections/index/HeaderBanner.vue";
-import SectionLatestArticles from "~/layouts/sections/index/LatestArticles.vue";
-import SectionLatestNews from "~/layouts/sections/index/LatestNews.vue";
+<page-query>
+query {
+  welcome_posts: allPost(sort: [, { by: "date", order: DESC }, { by: "date", order: DESC }], filter: { slug: {eq: "welcome"}, published: { eq: true }}) {
+    edges {
+      node {
+        id
+        title
+        date (format: "D. MMMM YYYY")
+        lastmod (format: "D. MMMM YYYY")
+        timeToRead
+        description
+        cover_image (width: 770, height: 380, blur: 10)
+        path
+        tags {
+          id
+          title
+          path
+        }
+      }
+    }
+  }
+  posts: allPost(filter: { slug: {ne: "welcome"}, published: { eq: true }}) {
+    edges {
+      node {
+        id
+        title
+        date (format: "D. MMMM YYYY")
+        timeToRead
+        description
+        cover_image (width: 770, height: 380, blur: 10)
+        path
+        tags {
+          id
+          title
+          path
+        }
+      }
+    }
+  }
+}
+</page-query>
 
-import SectionContribute from "~/layouts/sections/index/Contribute.vue";
-import SectionInfoBoxes from "~/layouts/sections/index/InfoBoxes.vue";
-import SectionOpenSource from "~/layouts/sections/index/OpenSource.vue";
+<script>
+import Author from '~/components/Author.vue'
+import PostCard from '~/components/PostCard.vue'
 
 export default {
   components: {
-    SectionHeaderBanner,
-    SectionLatestArticles,
-    SectionLatestNews,
-    SectionContribute,
-    SectionInfoBoxes,
-    SectionOpenSource
+    Author,
+    PostCard
   },
   metaInfo: {
-    title: "Th!nk different"
+    title: 'The Story of Eight'
   }
-};
+}
 </script>
-
